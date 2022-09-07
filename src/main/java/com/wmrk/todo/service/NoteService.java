@@ -1,20 +1,34 @@
 package com.wmrk.todo.service;
 
+import com.wmrk.todo.domain.Note;
 import com.wmrk.todo.repo.NoteRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
+@RequiredArgsConstructor
 public class NoteService {
-    public NoteRepo noteRepo;
+    public final NoteRepo noteRepo;
 
-    public NoteService(NoteRepo noteRepo) {
-        this.noteRepo = noteRepo;
+    public void deleteNotesByOwnerId(int ownerId) {
+        noteRepo.deleteByOwnerId(ownerId);
     }
 
-    public void deleteNoteByOwnerId(int id) {
-        noteRepo.deleteByOwnerId(id);
+    public Note createNote(Note newNote, int ownerId) {
+        newNote.setId(0);
+        newNote.setOwnerId(ownerId);
+        noteRepo.save(newNote);
+        return newNote;
+    }
+
+    public Note updateNote(Note curNote, @RequestBody Note newNote) {
+        BeanUtils.copyProperties(newNote, curNote, "id", "ownerId");
+        noteRepo.save(curNote);
+        return curNote;
     }
 }
