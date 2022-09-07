@@ -51,18 +51,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.
-//                jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-//                .usersByUsernameQuery("select name, password, active from usr where name=?")
-//                .authoritiesByUsernameQuery("select u.name, ur.roles from usr as u " +
-//                        "inner join user_role as ur on u.id = ur.user_id where u.name=?");
-//
-//    }
-
 }
