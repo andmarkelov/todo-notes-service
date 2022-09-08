@@ -26,7 +26,7 @@ public class NoteService {
         return newNote;
     }
 
-    public Note updateNote(Note curNote, @RequestBody Note newNote) {
+    public Note updateNote(Note curNote, Note newNote) {
         BeanUtils.copyProperties(newNote, curNote, "id", "ownerId");
         noteRepo.save(curNote);
         return curNote;
