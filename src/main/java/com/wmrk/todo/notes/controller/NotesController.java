@@ -1,10 +1,10 @@
-package com.wmrk.todo.controller;
+package com.wmrk.todo.notes.controller;
 
-import com.wmrk.todo.domain.Note;
-import com.wmrk.todo.hateoas.NoteModelAssembler;
+import com.wmrk.todo.notes.domain.Note;
+import com.wmrk.todo.notes.repo.NoteRepo;
+import com.wmrk.todo.notes.service.NoteService;
+import com.wmrk.todo.notes.hateoas.NoteModelAssembler;
 import com.wmrk.todo.jwt.JwtAuthentication;
-import com.wmrk.todo.repo.NoteRepo;
-import com.wmrk.todo.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -36,23 +36,20 @@ public class NotesController {
 
     @GetMapping("{id}")
     public ResponseEntity<EntityModel<Note>> getNote(@PathVariable("id") @P("owned") Note note) {
-        return Optional.of(note)
-                .map(modelAssembler::toModel)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return wrapNote(note);
     }
 
     @PostMapping
-    public Note createNote(@RequestBody Note newNote, JwtAuthentication auth) {
-        return noteService.createNote(newNote, auth.getUserId());
+    public ResponseEntity<EntityModel<Note>> createNote(@RequestBody Note newNote, JwtAuthentication auth) {
+        return wrapNote(noteService.createNote(newNote, auth.getUserId()));
     }
 
     @PatchMapping("{id}")
-    public Note updateNote(
+    public ResponseEntity<EntityModel<Note>> updateNote(
             @PathVariable("id") @P("owned") Note curNote,
             @RequestBody Note newNote
     ) {
-        return noteService.updateNote(curNote, newNote);
+        return wrapNote(noteService.updateNote(curNote, newNote));
     }
 
     @DeleteMapping
@@ -63,6 +60,13 @@ public class NotesController {
     @DeleteMapping("{id}")
     void deleteNote(@PathVariable("id") @P("owned") Note curNote) {
         noteRepo.deleteById(curNote.getId());
+    }
+
+    private ResponseEntity<EntityModel<Note>> wrapNote(Note note) {
+        return Optional.of(note)
+                .map(modelAssembler::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }

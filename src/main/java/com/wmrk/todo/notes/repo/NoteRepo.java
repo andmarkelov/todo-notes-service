@@ -1,6 +1,6 @@
-package com.wmrk.todo.repo;
+package com.wmrk.todo.notes.repo;
 
-import com.wmrk.todo.domain.Note;
+import com.wmrk.todo.notes.domain.Note;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

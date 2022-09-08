@@ -1,4 +1,4 @@
-package com.wmrk.todo;
+package com.wmrk.todo.notes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

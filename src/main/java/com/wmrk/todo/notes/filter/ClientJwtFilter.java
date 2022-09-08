@@ -1,5 +1,8 @@
-package com.wmrk.todo.jwt;
+package com.wmrk.todo.notes.filter;
 
+import com.wmrk.todo.jwt.JwtAuthentication;
+import com.wmrk.todo.jwt.JwtUtils;
+import com.wmrk.todo.notes.jwt.ClientJwtProvider;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,18 +19,18 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class ClientJwtFilter extends GenericFilterBean {
 
     private static final String AUTHORIZATION = "Authorization";
 
-    private final AuthService authService;
+    private final ClientJwtProvider jwtProvider;
 
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-        if (token != null && authService.validateToken(token)) {
-            final Claims claims = authService.getClaims(token);
+        if (token != null && jwtProvider.validateToken(token)) {
+            final Claims claims = jwtProvider.getClaims(token);
             final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims);
             jwtInfoToken.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);

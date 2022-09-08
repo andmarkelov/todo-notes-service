@@ -1,5 +1,6 @@
-package com.wmrk.todo.jwt;
+package com.wmrk.todo.notes.jwt;
 
+import com.wmrk.todo.jwt.JwtAuthentication;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -14,11 +15,11 @@ import javax.crypto.SecretKey;
 
 @Slf4j
 @Component
-public final class AuthService {
+public final class ClientJwtProvider {
 
     private final SecretKey jwtSecret;
 
-    public AuthService(@Value("${jwt.secret}") String secret) {
+    public ClientJwtProvider(@Value("${jwt.secret}") String secret) {
         this.jwtSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 

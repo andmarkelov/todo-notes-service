@@ -1,7 +1,7 @@
-package com.wmrk.todo.service;
+package com.wmrk.todo.notes.service;
 
-import com.wmrk.todo.domain.Note;
-import com.wmrk.todo.repo.NoteRepo;
+import com.wmrk.todo.notes.domain.Note;
+import com.wmrk.todo.notes.repo.NoteRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

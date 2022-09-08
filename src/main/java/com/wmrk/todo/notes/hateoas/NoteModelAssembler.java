@@ -1,21 +1,23 @@
-package com.wmrk.todo.hateoas;
+package com.wmrk.todo.notes.hateoas;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
-import com.wmrk.todo.controller.NotesController;
-import com.wmrk.todo.domain.Note;
+import com.wmrk.todo.notes.controller.NotesController;
+import com.wmrk.todo.notes.domain.Note;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class NoteModelAssembler implements RepresentationModelAssembler<Note, EntityModel<Note>> {
-
+    
     @Override
     public EntityModel<Note> toModel(Note note) {
 
         return EntityModel.of(note, //
-                linkTo(methodOn(NotesController.class).getNote(note)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(methodOn(NotesController.class).getNote(note)).withSelfRel(),
                 linkTo(methodOn(NotesController.class).getAllNotes(null)).withRel("notes"));
     }
 }

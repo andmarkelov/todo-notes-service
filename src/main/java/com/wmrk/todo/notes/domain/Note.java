@@ -1,4 +1,4 @@
-package com.wmrk.todo.domain;
+package com.wmrk.todo.notes.domain;
 
 import lombok.Data;
 

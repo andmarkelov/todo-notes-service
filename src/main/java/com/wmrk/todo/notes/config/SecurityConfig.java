@@ -1,6 +1,7 @@
-package com.wmrk.todo.config;
+package com.wmrk.todo.notes.config;
 
-import com.wmrk.todo.jwt.JwtFilter;
+
+import com.wmrk.todo.notes.filter.ClientJwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+    private final ClientJwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
